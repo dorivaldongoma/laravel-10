@@ -14,19 +14,26 @@ class SupportEloquentORM implements \App\Repositories\SupportRepositoryInterface
         protected \App\Models\Support $model
     ){}
 
+    public function paginate(
+        int $page = 1,
+        int $totalPerPage = 15,
+        string $filter = null,
+    ): PaginationInterface
+    {
+        $query = $this->model->query();
+
+        if ($filter) {
+            $query->where('subject', $filter)
+                ->orWhere('body', 'like', "%{$filter}%");
+        }
+
+        $result = $query->paginate($totalPerPage, ['*'], $page);
+
+        return new PaginationPresenter($result);
+    }
+
     public function getAll(string $filter = null): array
     {
-        /* 1 - $this->model->all()->toArray();
-           2 - return $this->model
-            ->where(function ($query) use ($filter){
-                if($filter){
-                    $query->where('subject', $filter);
-                    $query->orWhere('body', 'like', "%{$filter}%");
-                }
-            })
-            ->get()
-            ->toArray(); */
-
         $query = $this->model->query();
 
         if ($filter) {
