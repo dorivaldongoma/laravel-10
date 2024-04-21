@@ -2,6 +2,8 @@
 
 namespace App\Enums;
 
+use ValueError;
+
 enum SupportStatus: string
 {
     case A = "Open";
@@ -16,6 +18,6 @@ enum SupportStatus: string
             }
         }
 
-        throw new \ValueError("$statusValue is not a valid");
+        throw new ValueError("$statusValue is not a valid");
     }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\{SupportController};
 use App\Http\Controllers\Site\SiteController;
 use Illuminate\Support\Facades\Route;
 
+// Rout::resource('/supports', SupportController::class);
 Route::post('/supports', [SupportController::class, 'store']) ->name('supports.store');
 Route::put('/supports/{id}', [SupportController::class, 'update']) ->name('supports.update');
 Route::delete('/supports/{id}', [SupportController::class, 'destroy']) ->name('supports.destroy');

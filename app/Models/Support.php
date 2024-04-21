@@ -17,9 +17,9 @@ class Support extends Model
         'status'
     ];
 
-    protected $casts = [
+    /*protected $casts = [
         'status' => SupportStatus::class,
-    ];
+    ];*/
 
     public function status(): Attribute
     {
