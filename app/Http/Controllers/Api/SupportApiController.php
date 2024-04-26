@@ -59,6 +59,14 @@ class SupportApiController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if(!$this->service->findOne($id)){
+            return response()->json([
+                'error' => 'Not Found',
+            ], 404);
+        }
+
+        $this->service->delete($id);
+
+        return response()->json([], 204);
     }
 }
