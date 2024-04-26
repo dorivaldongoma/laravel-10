@@ -16,9 +16,26 @@ class SupportApiController extends Controller
         protected SupportService $service,
     ){}
 
-    public function index()
+    public function index(Request $request)
     {
-        //
+        // $supports = Support::paginate();
+        $supports = $this->service->paginate(
+            page: $request->get('page', 1),
+            totalPerPage: $request->get('per_page', 2),
+            filter: $request->filter,
+        );
+
+        return SupportResource::collection($supports->items())
+            ->additional([
+                'meta' => [
+                    'total' => $supports->total(),
+                    'is_first_page' => $supports->isFirstPage(),
+                    'is_last_page' => $supports->isLastPage(),
+                    'current_page' => $supports->currentPage(),
+                    'next_page' => $supports->getNumberNextPage(),
+                    'previus_page' => $supports->getNumberPreviousPage(),
+                    ]
+            ]);
     }
 
     /**
