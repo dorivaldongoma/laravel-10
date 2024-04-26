@@ -37,7 +37,13 @@ class SupportApiController extends Controller
      */
     public function show(string $id)
     {
-        //
+        if(!$support = $this->service->findOne($id)){
+            return response()->json([
+                'error' => 'Not Found',
+            ], 404);
+        }
+
+        return new SupportResource($support);
     }
 
     /**
